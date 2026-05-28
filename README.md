@@ -6,24 +6,35 @@
 
 ## Setup
 
-### 1. Fix Docker permissions (one-time)
+### Fix Docker permissions on Linux (one-time)
 
 ```bash
 sudo usermod -aG docker $USER
 newgrp docker
 ```
 
-### 2. Run n8n on a workstation 
+### Run LangFlow locally
 
 ```bash
-docker run -d --name n8n --restart unless-stopped \
-    -p 0.0.0.0:5678:5678 \
-    -e N8N_LISTEN_ADDRESS=0.0.0.0 \
-    -e N8N_SECURE_COOKIE=false \
-    -v n8n_data:/home/node/.n8n \
-    docker.n8n.io/n8nio/n8n
+docker run -d --name langflow --restart unless-stopped \
+    -p 7860:7860 \
+    -v langflow_data:/root/.langflow \
+    langflowai/langflow:latest
 ```
-## Run n8n on locally 
+
+LangFlow will be available at **http://localhost:7860**
+
+### Run LangFlow on a workstation
+
+```bash
+docker run -d --name langflow --restart unless-stopped \
+    -p 0.0.0.0:7860:7860 \
+    -v langflow_data:/root/.langflow \
+    langflowai/langflow:latest
+```
+
+### Run n8n locally
+
 ```bash
 docker run -d --name n8n --restart unless-stopped \
     -p 5678:5678 \
@@ -33,16 +44,18 @@ docker run -d --name n8n --restart unless-stopped \
 
 n8n will be available at **http://localhost:5678**
 
-### 3. Run Flowise AI on a workstation
+### Run n8n on a workstation
 
 ```bash
-docker run -d --name flowise --restart unless-stopped \
-    -p 0.0.0.0:3000:3000 \
-    -v flowise_data:/root/.flowise \
-    flowiseai/flowise:latest
+docker run -d --name n8n --restart unless-stopped \
+    -p 0.0.0.0:5678:5678 \
+    -e N8N_LISTEN_ADDRESS=0.0.0.0 \
+    -e N8N_SECURE_COOKIE=false \
+    -v n8n_data:/home/node/.n8n \
+    docker.n8n.io/n8nio/n8n
 ```
 
-## Run Flowise AI locally
+### Run Flowise AI locally
 
 ```bash
 docker run -d --name flowise --restart unless-stopped \
@@ -53,25 +66,14 @@ docker run -d --name flowise --restart unless-stopped \
 
 Flowise AI will be available at **http://localhost:3000**
 
-### 4. Run LangFlow on a workstation
+### Run Flowise AI on a workstation
 
 ```bash
-docker run -d --name langflow --restart unless-stopped \
-    -p 0.0.0.0:7860:7860 \
-    -v langflow_data:/root/.langflow \
-    langflowai/langflow:latest
+docker run -d --name flowise --restart unless-stopped \
+    -p 0.0.0.0:3000:3000 \
+    -v flowise_data:/root/.flowise \
+    flowiseai/flowise:latest
 ```
-
-## Run LangFlow locally
-
-```bash
-docker run -d --name langflow --restart unless-stopped \
-    -p 7860:7860 \
-    -v langflow_data:/root/.langflow \
-    langflowai/langflow:latest
-```
-
-LangFlow will be available at **http://localhost:7860**
 
 ## Useful Commands
 
